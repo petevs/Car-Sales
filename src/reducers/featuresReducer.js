@@ -1,11 +1,11 @@
 const initialState = {
-        additionalPrice: 0,
+        additionalPrice: 1500,
         car: {
           price: 26395,
           name: '2019 Ford Mustang',
           image:
             'https://cdn.motor1.com/images/mgl/0AN2V/s1/2019-ford-mustang-bullitt.jpg',
-          features: []
+          features: [{ id: 1, name: 'V-6 engine', price: 1500 }]
         },
         additionalFeatures: [
           { id: 1, name: 'V-6 engine', price: 1500 },
@@ -28,18 +28,18 @@ export const featuresReducer = (state = initialState, action) => {
                 additionalPrice: state.additionalPrice + selectedFeature.price
             }
         case 'REMOVE_FEATURE':
-            console.log('removing feature from reducer')
-
-            const featureToBeRemoved = state.features.filter(feature => feature.id === action.payload)
-
+            const featureToBeRemoved = state.car.features.filter(feature => feature.id === action.payload)
+            console.log(featureToBeRemoved[0].price)
             return {
                 ...state,
 
                 //Filter out selected feature from list
-                features: state.features.filter(feature => feature.id !== action.payload),
+                car: {...state.car,
+                    features: state.car.features.filter(feature => feature.id !== action.payload)
+                },
 
                 //Remove price of feature from additional features total
-                additionalPrice: state.additionalPrice - featureToBeRemoved.price
+                additionalPrice: state.additionalPrice - featureToBeRemoved[0].price
             }
         default:
             return state
