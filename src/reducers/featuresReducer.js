@@ -29,15 +29,17 @@ export const featuresReducer = (state = initialState, action) => {
             }
         case 'REMOVE_FEATURE':
             console.log('removing feature from reducer')
+
+            const featureToBeRemoved = state.features.filter(feature => feature.id === action.payload)
+
             return {
                 ...state,
-                const selectedFeature = state.features.filter(feature => feature.id === action.payload)
-                
+
                 //Filter out selected feature from list
                 features: state.features.filter(feature => feature.id !== action.payload),
 
                 //Remove price of feature from additional features total
-                additionalPrice: state.additionalPrice - selectedFeature.price
+                additionalPrice: state.additionalPrice - featureToBeRemoved.price
             }
         default:
             return state
